@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SignIn from '../Authentication/SignIn';
-import SignUp from '../Authentication/SignUp';
-import { useAuth } from '../../context/MainContext';
-import Home from '../Home';
+import SignIn from '../screens/Authentication/SignIn';
+import SignUp from '../screens/Authentication/SignUp';
+import { useAuth } from '../context/MainContext';
+import Home from '../screens/Home';
 import { View, ActivityIndicator } from 'react-native';
 
 const Stack = createNativeStackNavigator();
@@ -19,7 +19,7 @@ const AppStack = () => {
   return (
     <Stack.Navigator>
       {auth.user === null ? (
-        <Stack.Group>
+        <Stack.Group screenOptions={{ headerTitle: '' }}>
           <Stack.Screen name="SignIn" component={SignIn} />
           <Stack.Screen name="SignUp" component={SignUp} />
         </Stack.Group>

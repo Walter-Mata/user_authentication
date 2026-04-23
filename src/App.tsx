@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { AuthProvider } from './context/MainContext';
 
-import AppStack from './screens/navigation/AppStack';
+import AppStack from './navigation/AppStack';
 
 export default function App() {
   return (
