@@ -1,11 +1,19 @@
-import { TextInput as RNInput, StyleSheet, Text, View } from "react-native";
+import { useState } from 'react';
+import {
+  Image,
+  TextInput as RNInput,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 type TextInputProps = {
   label: string;
   value: string;
   placeholder?: string;
   onChangeText: (value: string) => void;
-  isPassword?:boolean
+  isPassword?: boolean;
   error?: string;
 };
 const TextInput = ({
@@ -16,6 +24,7 @@ const TextInput = ({
   isPassword,
   error,
 }: TextInputProps) => {
+  const [showPassword, setShowPassword] = useState(isPassword);
   return (
     <View style={styles.container}>
       <Text>{label}</Text>
@@ -24,9 +33,25 @@ const TextInput = ({
         value={value}
         style={styles.inputStyle}
         onChangeText={onChangeText}
-        secureTextEntry={isPassword}
+        secureTextEntry={showPassword}
       />
-      {error && <Text style={{ color: "red" }}>{error}</Text>}
+      {isPassword && (
+        <TouchableOpacity
+          onPress={() => setShowPassword(!showPassword)}
+          style={{ position: 'absolute', right: 10, top: 40 }}
+        >
+          <Image
+            source={
+              showPassword
+                ? require('../../assets/images/eye-open.png')
+                : require('../../assets/images/eye-shut.png')
+            }
+            style={{ width: 20, height: 20 }}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+      )}
+      {error && <Text style={{ color: 'red' }}>{error}</Text>}
     </View>
   );
 };
@@ -37,7 +62,7 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     borderWidth: 1,
-    borderColor: "#d3d3d3",
+    borderColor: '#d3d3d3',
     paddingVertical: 12,
     paddingHorizontal: 8,
     borderRadius: 12,

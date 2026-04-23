@@ -18,6 +18,7 @@ const SignIn = () => {
       email: '',
       password: '',
     },
+    validateOnChange:false,
     validationSchema: schema,
     onSubmit: async values => {
       const response = await auth.login(values.email, values.password);
