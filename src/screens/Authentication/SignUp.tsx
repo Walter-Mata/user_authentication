@@ -7,8 +7,18 @@ import { useAuth } from '../../context/MainContext';
 
 const schema = yup.object({
   name: yup.string().required('Name is required'),
-  email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup.string().min(6, 'Min 6 chars').required('Password is required'),
+  email: yup
+    .string()
+    .email('Invalid email format.')
+    .required('Email is required'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(6, 'Password length less than 6 characters.')
+    .matches(/[a-z]/, 'Invalid Password format.')
+    .matches(/[A-Z]/, 'Invalid Password format.')
+    .matches(/[0-9]/, 'Invalid Password format.')
+    .matches(/[@$!%*?&#]/, 'Invalid Password format.')
 });
 const SignUp = () => {
   const auth = useAuth();
@@ -57,6 +67,7 @@ const SignUp = () => {
           value={values.password}
           onChangeText={text => setFieldValue('password', text)}
           error={errors.password}
+          isPassword
         />
       </View>
       <Button label="Register" onPress={() => formik.handleSubmit()} />

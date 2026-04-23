@@ -7,8 +7,18 @@ import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../context/MainContext';
 
 const schema = yup.object({
-  email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup.string().min(6, 'Min 6 chars').required('Password is required'),
+  email: yup
+    .string()
+    .email('Invalid email format.')
+    .required('Email is required'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(6, 'Password length less than 6 characters.')
+    .matches(/[a-z]/, 'Invalid Password format.')
+    .matches(/[A-Z]/, 'Invalid Password format.')
+    .matches(/[0-9]/, 'Invalid Password format.')
+    .matches(/[@$!%*?&#]/, 'Invalid Password format.'),
 });
 const SignIn = () => {
   const auth = useAuth();
@@ -18,7 +28,7 @@ const SignIn = () => {
       email: '',
       password: '',
     },
-    validateOnChange:false,
+    validateOnChange: false,
     validationSchema: schema,
     onSubmit: async values => {
       const response = await auth.login(values.email, values.password);
