@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Image,
+  Platform,
   TextInput as RNInput,
   StyleSheet,
   Text,
@@ -38,7 +39,11 @@ const TextInput = ({
       {isPassword && (
         <TouchableOpacity
           onPress={() => setShowPassword(!showPassword)}
-          style={{ position: 'absolute', right: 10, top: 40 }}
+          style={{
+            position: 'absolute',
+            right: 10,
+            top: Platform.OS === 'android' ? 40 : 35,
+          }}
         >
           <Image
             source={
