@@ -40,7 +40,7 @@ Follow the official React Native setup guide: [React Native Environment Setup](h
 1. Install dependencies:
 
 ```bash
-npm install
+npm install or yarn instal
 ```
 
 2. For iOS, install CocoaPods dependencies:
