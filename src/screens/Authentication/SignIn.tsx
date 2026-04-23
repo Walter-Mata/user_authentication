@@ -36,7 +36,14 @@ const SignIn = () => {
     navigation.navigate('SignUp');
   };
   return (
-    <View style={{ padding: 20, backgroundColor: '#fff', rowGap: 20, flex: 1 }}>
+    <View
+      style={{
+        padding: 20,
+        backgroundColor: '#fff',
+        rowGap: 20,
+        flex: 1,
+      }}
+    >
       <Text style={{ fontSize: 24 }}>Sign-In your account</Text>
 
       <View style={{ rowGap: 5 }}>
@@ -51,8 +58,10 @@ const SignIn = () => {
           value={values.password}
           onChangeText={text => setFieldValue('password', text)}
           error={errors.password}
+          isPassword={true}
         />
-
+      </View>
+      <View style={{ rowGap: 10 }}>
         <Button label="Sign-In" onPress={() => formik.handleSubmit()} />
         <Button label="Sign-Up" onPress={goToSignUp} />
       </View>

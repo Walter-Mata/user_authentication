@@ -5,6 +5,7 @@ type TextInputProps = {
   value: string;
   placeholder?: string;
   onChangeText: (value: string) => void;
+  isPassword?:boolean
   error?: string;
 };
 const TextInput = ({
@@ -12,6 +13,7 @@ const TextInput = ({
   value,
   placeholder,
   onChangeText,
+  isPassword,
   error,
 }: TextInputProps) => {
   return (
@@ -22,6 +24,7 @@ const TextInput = ({
         value={value}
         style={styles.inputStyle}
         onChangeText={onChangeText}
+        secureTextEntry={isPassword}
       />
       {error && <Text style={{ color: "red" }}>{error}</Text>}
     </View>

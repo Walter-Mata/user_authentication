@@ -1,8 +1,9 @@
 import { useFormik } from 'formik';
-import { Text, View } from 'react-native';
+import { Alert, Text, View } from 'react-native';
 import * as yup from 'yup';
 import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
+import { useAuth } from '../../context/MainContext';
 
 const schema = yup.object({
   name: yup.string().required('Name is required'),
@@ -10,6 +11,7 @@ const schema = yup.object({
   password: yup.string().min(6, 'Min 6 chars').required('Password is required'),
 });
 const SignUp = () => {
+  const auth = useAuth();
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -17,8 +19,14 @@ const SignUp = () => {
       password: '',
     },
     validationSchema: schema,
-    onSubmit: () => {
-      console.log('submit');
+    onSubmit: async values => {
+      const response = await auth.signup({
+        ...values,
+      });
+      if (!response.success) {
+        Alert.alert(response?.message || '');
+        return;
+      }
     },
   });
   const values = formik.values;
@@ -49,9 +57,8 @@ const SignUp = () => {
           onChangeText={text => setFieldValue('password', text)}
           error={errors.password}
         />
-
-        <Button label="Register" onPress={() => formik.handleSubmit()} />
       </View>
+      <Button label="Register" onPress={() => formik.handleSubmit()} />
     </View>
   );
 };

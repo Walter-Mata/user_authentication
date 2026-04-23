@@ -3,10 +3,19 @@ import SignIn from '../Authentication/SignIn';
 import SignUp from '../Authentication/SignUp';
 import { useAuth } from '../../context/MainContext';
 import Home from '../Home';
+import { View, ActivityIndicator } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 const AppStack = () => {
   const auth = useAuth();
+
+  if (auth.loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size={32} color={'#0081f1'} />
+      </View>
+    );
+  }
   return (
     <Stack.Navigator>
       {auth.user === null ? (
@@ -14,9 +23,11 @@ const AppStack = () => {
           <Stack.Screen name="SignIn" component={SignIn} />
           <Stack.Screen name="SignUp" component={SignUp} />
         </Stack.Group>
-      ) :  <Stack.Group>
+      ) : (
+        <Stack.Group>
           <Stack.Screen name="Home" component={Home} />
-        </Stack.Group>}
+        </Stack.Group>
+      )}
     </Stack.Navigator>
   );
 };

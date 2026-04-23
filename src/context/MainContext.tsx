@@ -1,4 +1,3 @@
-// AuthContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -66,6 +65,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       return { success: true }
     } catch (error) {
+      console.log('error ',error)
       return { success: false, message: 'Signup failed' }
     }
   }
